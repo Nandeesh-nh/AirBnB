@@ -6,9 +6,14 @@ async function forwardGeocode(address) {
     console.log("you are in teh forward geocoding")
     const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(
     address
-  )}.json?key=${process.env.map_api_Key}`;
+  )}.json?key=lxdxKZxtrHzEAaxAUH7n`;
     const response = await axios.get(url); 
-    return response.data.features[0].geometry;    
+    if(response) {
+    return response.data.features[0].geometry;   
+    }
+    else {
+        return next("forward geocoding is not working")
+    } 
 }
 
 

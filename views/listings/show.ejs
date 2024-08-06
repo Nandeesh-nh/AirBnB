@@ -1,9 +1,9 @@
 <% layout("./layouts/boilerplate") %>
-    <script>
-        const token = "<%= process.env.map_api_Key %>";
-        const longitute = "<%= val.geometry.coordinates[0] %>";
-        const latitude = "<%= val.geometry.coordinates[1] %>";
-    </script>
+<script>
+    const token = "<%= process.env.map_api_Key %>";
+    const longitute = "<%= val.geometry.coordinates[0] %>";
+    const latitude = "<%= val.geometry.coordinates[1] %>";
+</script>
     <link rel="stylesheet" href="/css/rating.css">
 
     <body>
@@ -125,6 +125,6 @@
                                     </div>
             </div>
         </div>
-        <script src"/js/map.js"></script>
         <script src="/js/form.js"></script>
+        <script src"/js/map.js"></script>
     </body>
