@@ -1,6 +1,6 @@
 
 
-maptilersdk.config.apiKey = token ;
+maptilersdk.config.apiKey ="lxdxKZxtrHzEAaxAUH7n"
 const map = new maptilersdk.Map({
   container: 'map', // container's id or the HTML element to render the map
   style: "streets",
