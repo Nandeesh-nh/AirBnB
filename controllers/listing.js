@@ -3,6 +3,7 @@ const axios = require("axios");
 const ExpressError = require("../utils/ExpressError");
 
 async function forwardGeocode(address) {
+    console.log("you are in teh forward geocoding")
     const url = `https://api.maptiler.com/geocoding/${encodeURIComponent(
     address
   )}.json?key=${process.env.map_api_Key}`;
@@ -30,7 +31,7 @@ module.exports.indexRoute = async (req,res,next)=>{
     if(!value) {
         return next(new ExpressError("server is not responding",500));
     }
-    console.log(value);
+    console.log("near render part of the index");
     res.render("listings/index",{value});
 }
 
@@ -50,6 +51,8 @@ module.exports.newRoute = async (req,res)=>{
 
 module.exports.postNewRoute = async (req,res,next)=>{
     let {title,description,image,price,location,country,category} = req.body;
+    console.log("near post request");
+    console.log(req.body);
     // in an async function, or as a 'thenable':
    if(!req.file) {
      return next(new ExpressError("image not found",500));
