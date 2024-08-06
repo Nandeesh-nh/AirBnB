@@ -13,6 +13,7 @@ async function forwardGeocode(address) {
 
 module.exports.indexRoute = async (req,res,next)=>{
     let category = req.query;
+    let count = 0;
     if(JSON.stringify(category)!=='{}') {
         let value = await Listing.find({category : `${category.q}`});
        
@@ -20,13 +21,16 @@ module.exports.indexRoute = async (req,res,next)=>{
             return next(new ExpressError("Listing is not added for this category",500)); 
         }
         else {
+            console.log(value);
             return  res.render("listings/index",{value});
         }
     }
+    console.log("i am here in index route" + count++);
     let value = await Listing.find().sort({price : 'asc'});
     if(!value) {
         return next(new ExpressError("server is not responding",500));
     }
+    console.log(value);
     res.render("listings/index",{value});
 }
 
@@ -48,7 +52,7 @@ module.exports.postNewRoute = async (req,res,next)=>{
     let {title,description,image,price,location,country,category} = req.body;
     // in an async function, or as a 'thenable':
    if(!req.file) {
-     return next(new ExpressError("image image",500));
+     return next(new ExpressError("image not found",500));
    }
     let url = req.file.path;
     let filename = req.file.filename;
@@ -56,8 +60,10 @@ let demo = new Listing({title,description,image,price,location,country,category}
 demo.owner = req.user._id;
 demo.image = {url,filename};
 demo.geometry = await forwardGeocode(location + " " + country);
+console.log(demo);
 await demo.save();
 req.flash("success","New Listing is added")
+console.log("redirecting from adding to listings");
 res.redirect("/listings");
 }
 
@@ -109,10 +115,14 @@ module.exports.putEditRoute = async (req,res)=>{
 module.exports.deleteRoute = async (req,res,next)=>{
     let {id} = req.params;
     let val = await Listing.findByIdAndDelete(id)
+    console.log(val);
+    console.log("i am in the delete route")
     if(!val){
         return next(new ExpressError("not found id",404))
     }
     req.flash("success","Deleted listing successfully")
+    console.log(val);
+    console.log("moving from the delete to lisings");
     res.redirect("/listings");
 }
 

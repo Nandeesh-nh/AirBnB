@@ -54,11 +54,13 @@ const store = MongoStore.create({
     touchAfter : 24*60*60,
     crypto : {
         secret :process.env.secret,
-    }
+    },
 });
 store.on('error', function (e) {
     console.log("SESSION STORE ERROR", e);
 });
+
+
 app.use(session({
     store,
     secret : process.env.secret,
@@ -72,6 +74,8 @@ app.use(session({
     }
 }))
 
+app.use(flash());
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -79,20 +83,16 @@ passport.use(new localStrategy(User.authenticate()));            //passport code
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-app.use(flash());
 app.use((req,res,next)=>{
-    res.locals.user = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.user = req.user;
     next();
 })
 
 
-
-
 app.get("/",(req,res)=>(
-    res.send("i am listening here")
+    res.redirect("/listings")
 ))
 
 
