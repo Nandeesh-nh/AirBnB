@@ -50,9 +50,9 @@ module.exports.newRoute = async (req,res)=>{
 }
 
 module.exports.postNewRoute = async (req,res,next)=>{
-    let {title,description,image,price,location,country,category} = req.body;
     console.log("near post request");
     console.log(req.body);
+    let {title,description,image,price,location,country,category} = req.body;
     // in an async function, or as a 'thenable':
    if(!req.file) {
      return next(new ExpressError("image not found",500));
