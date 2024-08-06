@@ -11,8 +11,7 @@ const upload = multer({ storage });
 
 
 
-router.route("/")
-        .get(wrapAsync(listingControllers.indexRoute))
+router.get("/",wrapAsync(listingControllers.indexRoute))
        
 //creating new route new route
 router.get("/new",isloggedin,wrapAsync(listingControllers.newRoute))
