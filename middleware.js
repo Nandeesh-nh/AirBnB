@@ -4,7 +4,6 @@ const {Schema,reviewSchema} = require("./schema.js")
 const ExpressError = require("./utils/ExpressError.js")
 const funvalidation = (req,res,next)=>{
     let {error} = Schema.validate({...req.body,});
-    console.log("hi you are near funvalidation")
     if(error) {
        return next(new ExpressError(error,400))
     } 
@@ -12,7 +11,6 @@ const funvalidation = (req,res,next)=>{
 }
 const reviewValidation = (req,res,next)=>{
     let {error} = reviewSchema.validate(req.body);
-    console.log("you are near review validation")
     if(error) {
         const errMsg = error.details.map(err => err.message).join(',');
         return next(new ExpressError(error,400))
@@ -22,7 +20,7 @@ const reviewValidation = (req,res,next)=>{
     
 }
 const isloggedin = function (req,res,next){
-    console.log("your are i islogged in")
+
     if(!req.isAuthenticated()) {
         req.session.redirectUrl =req.originalUrl;
         req.flash("error","You mush Login to use this feature");
@@ -35,13 +33,13 @@ const isloggedin = function (req,res,next){
 }
 
 const savelocation = function (req,res,next){
-    console.log("you are near save location")
+
     res.locals.redirectUrl = req.session.redirectUrl;
     next();
 }
 
 const isOwner =  async function (req,res,next) {
-    console.log("you are in the isowner")
+   
     let {id} = req.params;
     let curUser = await Listing.findById(id);
     if(!curUser.owner.equals(res.locals.user._id)) {
