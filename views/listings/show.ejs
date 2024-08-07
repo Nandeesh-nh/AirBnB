@@ -1,6 +1,6 @@
 <% layout("./layouts/boilerplate") %>
 <script>
-    const token = "<%= process.env.map_api_Key %>";
+    const token = "<%= process.env.MAP_API_KEY %>";
     const longitute = "<%= val.geometry.coordinates[0] %>";
     const latitude = "<%= val.geometry.coordinates[1] %>";
 </script>

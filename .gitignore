@@ -1,3 +1,5 @@
 node_modules/
 .env
 package.zip
+# Local Netlify folder
+.netlify
