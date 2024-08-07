@@ -1,6 +1,6 @@
-if(process.env.NODE_ENV!="production") {
-    require("dotenv").config();
-}
+
+require("dotenv").config();
+
 
 const express = require("express");
 const app = express();
@@ -33,7 +33,7 @@ main()
     console.log(err);
 })
 async function main() {
-    await mongoose.connect(process.env.db_url);
+    await mongoose.connect(process.env.DB_URL);
 }  
 
 
@@ -50,10 +50,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 const store = MongoStore.create({
-    mongoUrl : process.env.db_url,
+    mongoUrl : process.env.DB_URL,
     touchAfter : 24*60*60,
     crypto : {
-        secret :process.env.secret,
+        secret :process.env.SECRET,
     },
 });
 store.on('error', function (e) {
@@ -63,7 +63,7 @@ store.on('error', function (e) {
 
 app.use(session({
     store,
-    secret : process.env.secret,
+    secret : process.env.SECRET,
     resave : false,
     saveUninitialized : true,
     cookie : {
