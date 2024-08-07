@@ -38,7 +38,9 @@ module.exports.indexRoute = async (req,res,next)=>{
 
 module.exports.search = async(req,res,next)=>{
     let search = req.body;
-    let value = await Listing.find({category:search.search});
+    let result = search.search.toLowerCase();
+    result = result.replace(" ","-");
+    let value = await Listing.find({category:result});
     if(value.length==0) {
         req.flash("success","listing is not added for this category")
         return res.redirect("/listings");
